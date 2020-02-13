@@ -31,8 +31,6 @@ import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
 //const url = 'https://clinical-center-tim31.herokuapp.com/'
 const url = 'http://localhost:8099/'
 
-let ulogovani = "";
-
 class ActivateAccount extends Component {
   constructor(props)
   {
@@ -58,6 +56,7 @@ class ActivateAccount extends Component {
   });*/
   componentDidMount()
   {
+    let ulogovani = "";
     const {id} = this.props.match.params ;
     this.setState({idUser: id});
 
