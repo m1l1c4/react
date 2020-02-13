@@ -37,7 +37,7 @@ import {
 import ExamplesNavbar from 'components/Navbars/ExamplesNavbar.js';
 import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
 //const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
 
 class CodebookPage extends Component {
     constructor(props)
@@ -175,11 +175,11 @@ showProfile(e){
   logoutUser = () => {  
     localStorage.removeItem('ulogovan')
     localStorage.removeItem('role')
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
   redirect = () => {
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
   showClinicPage = () =>{

@@ -41,8 +41,7 @@ import { withRouter } from "react-router-dom";
 // core components
 import ExamplesNavbar from 'components/Navbars/ExamplesNavbar.js';
 import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
-//const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
 
 class ClinicHomePage extends Component {
     constructor(props)
@@ -102,7 +101,7 @@ class ClinicHomePage extends Component {
       }).then((response) => {
         if (response.data === null)
         {
-          this.props.history.push('/register-page');
+          this.props.history.push('/login');
         }
         else{
         }
@@ -205,11 +204,11 @@ class ClinicHomePage extends Component {
   logoutUser = () => {  
     localStorage.removeItem('ulogovan')
     localStorage.removeItem('role')
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
   redirect = () => {
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
   getAllDoctors = () => {

@@ -32,8 +32,8 @@ import "../../../node_modules/react-notifications/lib/Notifications.js"
 
 const localizer = momentLocalizer(moment)
 
-//const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
+//const url = 'http://localhost:8099/'
 
 class AdministratorPage extends Component {
   constructor(props) {
@@ -1032,10 +1032,10 @@ cijenaTipaValidacija(e) {
               });
     }
   else{
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 }, (error) => {
-  this.props.history.push('/register-page');
+  this.props.history.push('/login');
 });
   }
   
@@ -1856,11 +1856,11 @@ let AuthStr = 'Bearer '.concat(localStorage.getItem("ulogovan"));
   logoutUser = () => {  
     localStorage.removeItem('ulogovan')
     localStorage.removeItem('role')
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
  
   redirect = () => {
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
  
   showDoktori = (e) =>{

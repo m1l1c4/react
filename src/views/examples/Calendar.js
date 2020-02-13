@@ -10,8 +10,8 @@ import axios from 'axios';
 import { NotificationManager } from "react-notifications";
 
 const localizer = momentLocalizer(moment)
-//const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
+//const url = 'http://localhost:8099/'
 
 class MyCalendar extends Component {
     constructor(props)
@@ -65,7 +65,7 @@ class MyCalendar extends Component {
   logoutUser = () => {  
     localStorage.removeItem('ulogovan')
     localStorage.removeItem('role')
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
     doc = document.documentElement.classList.remove("nav-open");
@@ -162,7 +162,7 @@ class MyCalendar extends Component {
   logoutUser = () => {  
     localStorage.removeItem('ulogovan')
     localStorage.removeItem('role')
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
   render() {
