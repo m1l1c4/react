@@ -99,7 +99,8 @@ class ConfirmCheckup extends Component {
           NotificationManager.success('Vas pregled je uspjesno zakazan!', 'Uspjesno!', 3000);
             this.setState({message: "Vaš pregled je uspešno zakazan. Uskoro ćete biti preusmereni na početnu stranicu.", showResponse: true})
             //const redirect = this.redirect ;
-            let timerREdirection = setTimeout( this.redirect, 5000);
+            //let timerREdirection = setTimeout( this.redirect, 5000);
+            this.redirect();
         }
               
       
@@ -117,7 +118,8 @@ class ConfirmCheckup extends Component {
         if (response.status === 200) {
           NotificationManager.success('Uspjesno ste otkazali pregled!', 'Uspjesno!', 3000);
             this.setState({message: "Otkazali ste pregled. Uskoro ćete biti preusmereni na početnu stranicu.", showResponse: true})
-            let timerREdirection = setTimeout( this.redirect, 5000);
+            //let timerREdirection = setTimeout( this.redirect, 5000);
+            this.redirect();
         }
               
       

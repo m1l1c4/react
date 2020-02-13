@@ -1,20 +1,13 @@
 /*!
-
 =========================================================
 * Paper Kit React - v1.0.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/paper-kit-react
-
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React , {Component} from "react";
 import axios from 'axios';
@@ -128,7 +121,6 @@ class PatientPage extends Component {
       sort4: true,
       hideOperacije: true,
       canAccessToMedicalRecord: false,
-      labelHide:true,
       selectedReport: {checkUp:{
         medicalWorker:{
           user:{
@@ -269,7 +261,6 @@ pristupiPacijentu(){
     }).then((response)=>{       
       if (response.status === 200) {
         NotificationManager.info('Klinika je uspešno ocenjena', 'Info!', 3000);
-        this.setState({ratingCl: rating})
       }      
     },(error)=>{
       NotificationManager.error('Kliniku je moguce ocjeniti samo jednom po pregledu', 'Info!', 3000);
@@ -301,7 +292,7 @@ pristupiPacijentu(){
         url: 'http://localhost:8099/clinic/filterClinic/' + parametar ,
         data: klinike
       }).then((response)=>{       
-        this.setState({clinics: response.data, labelHide: false}) ;
+        this.setState({clinics: response.data}) ;
         
       },(error)=>{
         console.log(error);
@@ -324,7 +315,7 @@ pristupiPacijentu(){
       url: 'http://localhost:8099/clinic/clinicDoctors' ,
       data: parametri     
     }).then((response)=>{       
-      this.setState({hideDokore: false, labelHide:true, hideKlinike: true ,doctors: response.data, hiddenForm: true, hideDocSearch: false, hideFilter: true}) ;
+      this.setState({hideDokore: false, hideKlinike: true ,doctors: response.data, hiddenForm: true, hideDocSearch: false, hideFilter: true}) ;
       
     },(error)=>{
       console.log(error);
@@ -332,7 +323,7 @@ pristupiPacijentu(){
   }
 
   cancelSearch = () => {
-    this.setState({hiddenForm: false, hideFilter: true, pretragaHappened: false, labelHide:true})
+    this.setState({hiddenForm: false, hideFilter: true, pretragaHappened: false})
     this.getAllClinics();
   }
 
@@ -440,11 +431,11 @@ pristupiPacijentu(){
         headers: { "Authorization": AuthStr }  ,
         data: checkup     
       }).then((response)=>{ 
-        if (response.status === 200) {
-          this.setState({message: "Uspešno ste poslali zahtev za zakazivanje pregleda", showAppointment: false, labelHide:false})
+        if (response.status === '200') {
+          this.setState({message: "Uspešno ste poslali zahtev za zakazivanje pregleda", showAppointment: false})
           NotificationManager.success('Uspešno ste poslali zahtev za zakazivanje pregleda!', 'Uspjesno!', 3000);
         } else {
-          NotificationManager.info('Ne mozete poslati zahtjev za pregled!', 'Info!', 3000);
+          NotificationManager.info('Ne mozete posleti zahtjev za rigistraciju!', 'Info!', 3000);
 
          // alert('NE MOZE DA ZAKAZE')
         }
@@ -1365,6 +1356,11 @@ render() {
                               <option>3</option>
                               <option>4</option>
                               <option>5</option>
+                              <option>6</option>
+                              <option>7</option>
+                              <option>8</option>
+                              <option>9</option>
+                              <option>10</option>
                           </select>                            
                       </div>
                     </div>                                             
@@ -1433,7 +1429,6 @@ render() {
         </div>    
   </div>
   </section> 
-  <label id = "labelHide" hidden = {this.state.labelHide}>&nbsp;</label>
 
   <section className="bar pt-0" hidden={this.state.hideDokore}>
         <div className="row">
@@ -1441,7 +1436,7 @@ render() {
           <p className="text lead">Doktori izabranog kliničkog centra</p>
           <div className="box mt-0 mb-lg-0">
             <div className="table-responsive">
-              <table id = "tableDoctors" className="table table-hover">
+              <table className="table table-hover">
                 <thead>
                   <tr>
                     <th onClick={() => this.sortByNazivDoc()} className="text-primary font-weight-bold">Ime</th>
@@ -1468,7 +1463,7 @@ render() {
   </div>
   </section>  
 
-  <Modal id = "modal1" modalClassName="modal-register" isOpen={this.state.showTermin}>
+  <Modal  modalClassName="modal-register" isOpen={this.state.showTermin}>
 <div className="modal-header no-border-header text-center">
         <button
           aria-label="Close"
@@ -1495,7 +1490,7 @@ render() {
                   <div className="col-md-12">
                     <div className="form-group">
                       <label className="text-primary font-weight-bold">Termini</label>
-                      <select id = "timeOfCheckup"  value = {this.state.selectedTermin} onChange={(event) => this.setState({selectedTermin: event.target.value})} className="form-control" >
+                      <select value = {this.state.selectedTermin} onChange={(event) => this.setState({selectedTermin: event.target.value})} className="form-control" >
                           {this.state.selectedDoctor!=null && this.state.selectedDoctor.availableCheckups[this.state.pretragaDatum].map(item => (
                               <option key={item} data-key={item}>
                                   {item}
@@ -1505,7 +1500,7 @@ render() {
                     </div>
                   </div>
                   </div>        
-      <Button id="buttonFirstClick" block className="btn-round" color="info" onClick={event => this.setState({showAppointment: true, showTermin:false})}>Zakaži</Button>
+      <Button block className="btn-round" color="info" onClick={event => this.setState({showAppointment: true, showTermin:false})}>Zakaži</Button>
       </form>
 </div>
 </Modal> 
@@ -1569,7 +1564,7 @@ render() {
 </div>
 </Modal> 
 
-<Modal id = "modal2"  modalClassName="modal-register" isOpen={this.state.showAppointment}>
+<Modal  modalClassName="modal-register" isOpen={this.state.showAppointment}>
 <div className="modal-header no-border-header text-center">
         <button
           aria-label="Close"
@@ -1632,7 +1627,7 @@ render() {
               </form>
             </div>
           </div> 
-      <Button id = "buttonSecondClick" block className="btn-round" color="info" onClick={this.medicalRequest}>POTVRDI</Button>
+      <Button block className="btn-round" color="info" onClick={this.medicalRequest}>POTVRDI</Button>
       </div>
 
 </Modal> 
