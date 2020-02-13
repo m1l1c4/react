@@ -56,7 +56,7 @@ class ActivateAccount extends Component {
   });*/
   componentDidMount()
   {
-    let ulogovani = "";
+    //let ulogovani = "";
     const {id} = this.props.match.params ;
     this.setState({idUser: id});
 
@@ -73,7 +73,7 @@ class ActivateAccount extends Component {
           this.props.history.push('/register-page');
         }
         else{
-          ulogovani = response.data.type;
+          //ulogovani = response.data.type;
         }
       }, (error) => {
       });
