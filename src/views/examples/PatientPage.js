@@ -13,21 +13,20 @@ import React , {Component} from "react";
 import axios from 'axios';
 import "assets/css/bootstrap.min.css";
 // reactstrap components
-import { Button, Alert, Form, FormGroup, Input, Container, Row, Col, Modal, FormText } from "reactstrap";
+import { Button, Form, FormGroup, Input, Container, Row, Col, Modal, FormText } from "reactstrap";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import StarRatings from 'react-star-ratings';
 import Popover from 'react-bootstrap/Popover'
 import { withRouter } from "react-router-dom";
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
-import RegisterModal from "components/RegisterModal";
 import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
 
 
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import "../../../node_modules/react-notifications/lib/notifications.css"
 import "../../../node_modules/react-notifications/lib/Notifications.js"
-const url = 'https://clinical-center-tim31.herokuapp.com/';
+
 class PatientPage extends Component {
   constructor(props)
   {
@@ -190,7 +189,7 @@ class PatientPage extends Component {
     let AuthStr = 'Bearer '.concat(token);
     axios({
       method: 'get' ,    
-      url: url + 'getUser' ,           
+      url: 'http://localhost:8099/getUser' ,           
       headers: { "Authorization": AuthStr }   
     }).then((response) => {
       if (response.data != null)
@@ -207,7 +206,7 @@ pristupiPacijentu(){
  let AuthStr = 'Bearer '.concat(token);
  axios({
    method: 'get',
-   url: url + 'canAccessToMedicalRecord/' + id,
+   url: 'http://localhost:8099/canAccessToMedicalRecord/' + id,
    headers: { "Authorization": AuthStr }  ,
  }).then((response) => {
    console.log(response);
@@ -231,7 +230,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: url + 'rateMedicalWorker'  ,
+      url: 'http://localhost:8099/rateMedicalWorker'  ,
       headers: { "Authorization": AuthStr }  ,
       data: params
     }).then((response)=>{       
@@ -256,13 +255,12 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: url + 'rateClinic'  ,
+      url: 'http://localhost:8099/clinic/rateClinic'  ,
       headers: { "Authorization": AuthStr }  ,
       data: params
     }).then((response)=>{       
-      if (response.status == 200) {
+      if (response.status === 200) {
         NotificationManager.info('Klinika je uspešno ocenjena', 'Info!', 3000);
-        this.setState({ratingCl: rating})
       }      
     },(error)=>{
       NotificationManager.error('Kliniku je moguce ocjeniti samo jednom po pregledu', 'Info!', 3000);
@@ -285,13 +283,13 @@ pristupiPacijentu(){
    clinicFilter = () => {
     let parametar = this.state.filterOcena
     let klinike = this.state.clinics
-    if (parametar == "")
+    if (parametar === "")
       alert("polje za filtriranje je prazno")
     else {
 
       axios({
         method: 'post',
-        url: url + 'filterClinic/' + parametar ,
+        url: 'http://localhost:8099/clinic/filterClinic/' + parametar ,
         data: klinike
       }).then((response)=>{       
         this.setState({clinics: response.data}) ;
@@ -314,7 +312,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: url + 'clinicDoctors' ,
+      url: 'http://localhost:8099/clinic/clinicDoctors' ,
       data: parametri     
     }).then((response)=>{       
       this.setState({hideDokore: false, hideKlinike: true ,doctors: response.data, hiddenForm: true, hideDocSearch: false, hideFilter: true}) ;
@@ -338,7 +336,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: url + 'changePass' ,
+      url: 'http://localhost:8099/changePass' ,
       data: newp ,
       headers: { "Authorization": AuthStr } ,      
       ContentType: 'application/json'
@@ -360,7 +358,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: url + 'searchClinic' ,
+      url: 'http://localhost:8099/clinic/searchClinic' ,
       data: parametri
     }).then((response)=>{       
       this.setState({clinics: response.data, hideFilter: false, pretragaHappened: true}) ;
@@ -383,7 +381,7 @@ pristupiPacijentu(){
 
   axios({
     method: 'post',
-    url: url + 'searchDoctors' ,
+    url: 'http://localhost:8099/searchDoctors' ,
     data: parametri
   }).then((response)=>{       
     this.setState({doctors: response.data}) ;
@@ -429,11 +427,11 @@ pristupiPacijentu(){
 
       axios({
         method: 'post',
-        url: url + 'checkup/checkupRequest' ,
+        url: 'http://localhost:8099/checkup/checkupRequest' ,
         headers: { "Authorization": AuthStr }  ,
         data: checkup     
       }).then((response)=>{ 
-        if (response.status == '200') {
+        if (response.status === '200') {
           this.setState({message: "Uspešno ste poslali zahtev za zakazivanje pregleda", showAppointment: false})
           NotificationManager.success('Uspešno ste poslali zahtev za zakazivanje pregleda!', 'Uspjesno!', 3000);
         } else {
@@ -455,7 +453,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'get',
-      url: url + 'checkUpType/allTypes'      
+      url: 'http://localhost:8099/checkUpType/allTypes'      
     }).then((response)=>{  
       for (i=0 ; i < response.data.length ; i++) {
         tipovi.push(response.data[i].name)
@@ -470,9 +468,9 @@ pristupiPacijentu(){
    }
 
   validateEmptyFields = () => {     
-      if (this.state.name == "" || this.state.surname == "" || this.state.email == "" || this.state.jbo == "" || this.state.phone == "" || this.state.adress == "" || this.state.city == "" || this.state.statee == "" )
+      if (this.state.name === "" || this.state.surname === "" || this.state.email === "" || this.state.jbo === "" || this.state.phone === "" || this.state.adress === "" || this.state.city === "" || this.state.statee === "" )
       {
-          this.state.notFilledError = true;
+        this.setState({notFilledError:true});
       }
   }
 
@@ -482,7 +480,7 @@ pristupiPacijentu(){
   getAllClinics = () => {
     axios({
       method: 'get',
-      url: url + 'clinic/getClinics'      
+      url: 'http://localhost:8099/clinic/getClinics'      
     }).then((response)=>{    
       this.getAllCheckupTypes();   
       this.setState({clinics: response.data, chooseTip: true, hideOperacije: true,
@@ -493,7 +491,7 @@ pristupiPacijentu(){
   }
 
   handleMatching = (event) => {
-    if (this.state.password1 != event.target.value)
+    if (this.state.password1 !== event.target.value)
       {
         this.setState({formValid: true, passErrorText: "Lozinke se ne poklapaju."});    // disabling submit button
       } else {
@@ -507,7 +505,7 @@ pristupiPacijentu(){
     const {id} = this.props.match.params; 
     axios({
       method: 'get',
-      url: url + 'getPatientProfile/' + id,
+      url: 'http://localhost:8099/getPatientProfile/' + id,
       headers: { "Authorization": AuthStr }
     }).then((response)=>{      
       this.setState({name:response.data.user.name, email:response.data.user.email,surname:response.data.user.surname,phone:response.data.phoneNumber,password:response.data.user.password,
@@ -550,11 +548,11 @@ pristupiPacijentu(){
 
           axios({
             method: 'post',
-            url: url + 'editPatient', 
+            url: 'http://localhost:8099/editPatient', 
             data: data ,
             ContentType: 'application/json'            
           }).then((response) => {
-            if (response.status == 200)
+            if (response.status === 200)
               {
                 if (response.data != null)
                 NotificationManager.success('Uspešno ste izmjenili podatke!', 'Uspjesno!', 3000);
@@ -579,7 +577,7 @@ pristupiPacijentu(){
     niz.push(this.state.pretragaDatum)
     axios({
       method: 'post',
-      url: url + 'clinic/getSelectedDoctor',
+      url: 'http://localhost:8099/clinic/getSelectedDoctor',
       headers: { "Authorization": AuthStr } ,
       data: niz
     }).then((response)=>{      
@@ -596,10 +594,9 @@ pristupiPacijentu(){
     const {id} = this.props.match.params;
     axios({
       method: 'get',
-      url: url + 'getMedicalRecord/' + id,
+      url: 'http://localhost:8099/getMedicalRecord/' + id,
       headers: { "Authorization": AuthStr }
     }).then((response)=>{      
-      let patient = response.data.patient; 
       this.setState({mrHeight: response.data.height , mrWeight: response.data.weight, 
         mrBloodType: response.data.bloodType, mrDiopt: response.data.diopter, diagnoses: response.data.diagnoses,
         mrId: response.data.id, hideDokore: true, tableHistory: true, showKarton: false, hiddenForm: true, hideKlinike: true, hideDoctors: true, showProfile: true, chooseTip: true, hideOperacije: true
@@ -616,7 +613,7 @@ pristupiPacijentu(){
     const {id} = this.props.match.params;   
     axios({
       method: 'post',
-      url: url + 'checkup/patientHistory/' + type + '/' + id ,
+      url: 'http://localhost:8099/checkup/patientHistory/' + type + '/' + id ,
       headers: { "Authorization": AuthStr } ,     
     }).then((response)=>{     
       if (type === 'PREGLED') {
@@ -648,7 +645,7 @@ pristupiPacijentu(){
       }
       axios({
         method: 'post',
-        url: url + 'editMedicalRecord',
+        url: 'http://localhost:8099/editMedicalRecord',
         data: data,
         ContentType: 'application/json'
     }).then((response) => {
@@ -712,11 +709,11 @@ sortByCity(){
   if(this.state.sort2){
     temp.sort(function(a,b){let ime1 = a.city; let ime2 = b.city; return ime2.localeCompare(ime1)})
   }
-  else{
+else{
   temp.sort(function(a,b){let ime1 = a.city; let ime2 = b.city; return ime1.localeCompare(ime2)})
-  }
+}
   this.setState({clinics:temp,sort2: !this.state.sort2})
-  }
+}
 
 
 
@@ -732,7 +729,7 @@ sortByCity(){
       let AuthStr = 'Bearer '.concat(token);
       axios({
         method: 'post',
-        url: url + 'checkup/updateReport',
+        url: 'http://localhost:8099/checkup/updateReport',
         data: report,
         ContentType: 'application/json',
         headers: { "Authorization": AuthStr }  
@@ -752,7 +749,7 @@ sortByCity(){
     event.preventDefault();
     axios({
         method: 'get',
-        url: url + 'codebook',
+        url: 'http://localhost:8099/codebook',
       }).then((response)=>{
         console.log(response);
         this.setState({codes:response.data})
@@ -797,7 +794,7 @@ if (ok) {
     };
     axios({
         method: 'post',
-        url: url + 'checkup/addReport',
+        url: 'http://localhost:8099/checkup/addReport',
         data: data,
         ContentType: 'application/json'
     }).then((response) => {
@@ -808,7 +805,7 @@ if (ok) {
 
         axios({
             method: 'post',
-            url: url + 'checkup/addRecipes/'+response.data.id,
+            url: 'http://localhost:8099/checkup/addRecipes/'+response.data.id,
             data: this.state.codebooks,
             ContentType: 'application/json'
         }).then((response) => {
@@ -904,7 +901,7 @@ else
 
       axios({
           method: 'post',
-          url: url + 'bookForPatient',
+          url: 'http://localhost:8099/bookForPatient',
           headers: { "Authorization": AuthStr } ,
           data: params,
           ContentType: 'application/json',
@@ -1004,7 +1001,7 @@ loadCheckup = () => {
   let AuthStr = 'Bearer '.concat(token);
   axios({
     method: 'get',
-    url: url + 'checkup/getCheckup/' + id,
+    url: 'http://localhost:8099/checkup/getCheckup/' + id,
     headers: { "Authorization": AuthStr } ,
   }).then((response)=>{      
     this.setState({checkup: response.data, checkupExist:true}) ;
@@ -1018,10 +1015,10 @@ checkupInfo = id => {
   let AuthStr = 'Bearer '.concat(localStorage.getItem("ulogovan"));    
   axios({
     method: 'post',
-    url: url + 'checkup/infoReport/' + id ,
+    url: 'http://localhost:8099/checkup/infoReport/' + id ,
     headers: { "Authorization": AuthStr } ,     
   }).then((response)=>{ 
-    if (response.status == 200)
+    if (response.status === 200)
       this.setState({infoDijagnoza: response.data.report.diagnose , infoInfo: response.data.report.informations
         , showProfile: true, chooseTip: true, infoRecepti: response.data.code.name , showDetailsCheckup: true ,
       sala: response.data.report.checkUp.room.name + ' ' + response.data.report.checkUp.room.number,selectedReport:response.data.report})
@@ -1036,8 +1033,8 @@ render() {
   return (
   <div>
    <ExamplesNavbar showProfileEvent={() => this.setState({hideDokore: true, showProfile: false, hiddenForm: true, hideKlinike: true, tableHistory: true, showKarton: true, chooseTip: true, hideOperacije: true})} 
-                    hideLoginEvent={true} hideRegisterEvent={true} 
-                    hideLoginEvent = {true}                     
+                    hideLoginEvent={true} 
+                    hideRegisterEvent={true} 
                     hideNewWorker = {true}
                     hideQuickEvent = {true}
                     hideRecipes = {true}
@@ -1182,7 +1179,7 @@ render() {
               <Input  name="password11"  value = {this.state.password11} onBlur={this.handleMatching} onChange={event => this.setState({password11: event.target.value})}  type="password"  />
               <p style={{color:'red'}} > {this.state.passErrorText} </p>
             </FormGroup>
-      <Button block className="btn-round" color="info" disabled={this.state.password1 != this.state.password11}>IZMENI</Button>
+      <Button block className="btn-round" color="info" disabled={this.state.password1 !== this.state.password11}>IZMENI</Button>
       </Form>
 </div>
 </Modal>
@@ -1226,21 +1223,21 @@ render() {
       <div className="form-row">
         <FormGroup className="col-md-4">
           <label for="inputEmail4">Visina (cm):</label>
-          <Input type="text" disabled={role == 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrHeight} onChange={(event) => this.setState({mrHeight: event.target.value})}/>
+          <Input type="text" disabled={role === 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrHeight} onChange={(event) => this.setState({mrHeight: event.target.value})}/>
         </FormGroup>
         <FormGroup className="col-md-4">
           <label>Težina (kg):</label>
-          <Input type="text" disabled={role == 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrWeight} onChange={(event) => this.setState({mrWeight: event.target.value})}/>
+          <Input type="text" disabled={role === 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrWeight} onChange={(event) => this.setState({mrWeight: event.target.value})}/>
         </FormGroup>
       </div>
       <div className="form-row">
       <FormGroup className="col-md-4">
         <label>Krvna grupa:</label>
-        <Input type="text" disabled={role == 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrBloodType} onChange={(event) => this.setState({mrBloodType: event.target.value})}/>
+        <Input type="text" disabled={role === 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrBloodType} onChange={(event) => this.setState({mrBloodType: event.target.value})}/>
       </FormGroup>
       <FormGroup className="col-md-4">
         <label>Dioptrija:</label>
-        <Input type="text" disabled={role == 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrDiopt} onChange={(event) => this.setState({mrDiopt: event.target.value})}/>
+        <Input type="text" disabled={role === 'PACIJENT' || this.state.enableMedRecChange === false} value={this.state.mrDiopt} onChange={(event) => this.setState({mrDiopt: event.target.value})}/>
       </FormGroup>    
       <FormGroup className="col-md-4">
         <label>&nbsp;</label>
@@ -1556,7 +1553,7 @@ render() {
                       <label className="text-primary">Informacije:</label>
                           <Input type="textarea" value={this.state.infoInfo} disabled={role !== 'DOKTOR' || this.state.buttonText === 'Izmeni'} onChange={(e) => this.setState({infoInfo:e.target.value})}>{this.state.infoInfo}</Input>
                           <br></br>
-                          <Button hidden={this.state.ulogovani.id != this.state.selectedReport.checkUp.medicalWorker.user.id} block className="btn-round" color="info" onClick={() => this.editReport()}>
+                          <Button hidden={this.state.ulogovani.id !== this.state.selectedReport.checkUp.medicalWorker.user.id} block className="btn-round" color="info" onClick={() => this.editReport()}>
           {this.state.buttonText}
         </Button>       
                     </div>
