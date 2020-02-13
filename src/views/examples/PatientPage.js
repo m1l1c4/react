@@ -27,6 +27,8 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import "../../../node_modules/react-notifications/lib/notifications.css"
 import "../../../node_modules/react-notifications/lib/Notifications.js"
 
+const url = "https://clinical-center-tim31.herokuapp.com/"
+
 class PatientPage extends Component {
   constructor(props)
   {
@@ -189,7 +191,7 @@ class PatientPage extends Component {
     let AuthStr = 'Bearer '.concat(token);
     axios({
       method: 'get' ,    
-      url: 'http://localhost:8099/getUser' ,           
+      url: url + 'getUser' ,           
       headers: { "Authorization": AuthStr }   
     }).then((response) => {
       if (response.data != null)
@@ -206,7 +208,7 @@ pristupiPacijentu(){
  let AuthStr = 'Bearer '.concat(token);
  axios({
    method: 'get',
-   url: 'http://localhost:8099/canAccessToMedicalRecord/' + id,
+   url: url + 'canAccessToMedicalRecord/' + id,
    headers: { "Authorization": AuthStr }  ,
  }).then((response) => {
    console.log(response);
@@ -230,7 +232,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: 'http://localhost:8099/rateMedicalWorker'  ,
+      url: url + 'rateMedicalWorker'  ,
       headers: { "Authorization": AuthStr }  ,
       data: params
     }).then((response)=>{       
@@ -255,7 +257,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: 'http://localhost:8099/clinic/rateClinic'  ,
+      url: url + 'clinic/rateClinic'  ,
       headers: { "Authorization": AuthStr }  ,
       data: params
     }).then((response)=>{       
@@ -289,7 +291,7 @@ pristupiPacijentu(){
 
       axios({
         method: 'post',
-        url: 'http://localhost:8099/clinic/filterClinic/' + parametar ,
+        url: url + 'clinic/filterClinic/' + parametar ,
         data: klinike
       }).then((response)=>{       
         this.setState({clinics: response.data}) ;
@@ -312,7 +314,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: 'http://localhost:8099/clinic/clinicDoctors' ,
+      url: url + 'clinic/clinicDoctors' ,
       data: parametri     
     }).then((response)=>{       
       this.setState({hideDokore: false, hideKlinike: true ,doctors: response.data, hiddenForm: true, hideDocSearch: false, hideFilter: true}) ;
@@ -336,7 +338,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: 'http://localhost:8099/changePass' ,
+      url: url + 'changePass' ,
       data: newp ,
       headers: { "Authorization": AuthStr } ,      
       ContentType: 'application/json'
@@ -358,7 +360,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'post',
-      url: 'http://localhost:8099/clinic/searchClinic' ,
+      url: url + 'clinic/searchClinic' ,
       data: parametri
     }).then((response)=>{       
       this.setState({clinics: response.data, hideFilter: false, pretragaHappened: true}) ;
@@ -381,7 +383,7 @@ pristupiPacijentu(){
 
   axios({
     method: 'post',
-    url: 'http://localhost:8099/searchDoctors' ,
+    url: url + 'searchDoctors' ,
     data: parametri
   }).then((response)=>{       
     this.setState({doctors: response.data}) ;
@@ -427,7 +429,7 @@ pristupiPacijentu(){
 
       axios({
         method: 'post',
-        url: 'http://localhost:8099/checkup/checkupRequest' ,
+        url: url + 'checkup/checkupRequest' ,
         headers: { "Authorization": AuthStr }  ,
         data: checkup     
       }).then((response)=>{ 
@@ -435,7 +437,7 @@ pristupiPacijentu(){
           this.setState({message: "Uspešno ste poslali zahtev za zakazivanje pregleda", showAppointment: false})
           NotificationManager.success('Uspešno ste poslali zahtev za zakazivanje pregleda!', 'Uspjesno!', 3000);
         } else {
-          NotificationManager.info('Ne mozete posleti zahtjev za rigistraciju!', 'Info!', 3000);
+          NotificationManager.info('Ne mozete poslati zahtjev za rigistraciju!', 'Info!', 3000);
 
          // alert('NE MOZE DA ZAKAZE')
         }
@@ -453,7 +455,7 @@ pristupiPacijentu(){
 
     axios({
       method: 'get',
-      url: 'http://localhost:8099/checkUpType/allTypes'      
+      url: url + 'checkUpType/allTypes'      
     }).then((response)=>{  
       for (i=0 ; i < response.data.length ; i++) {
         tipovi.push(response.data[i].name)
@@ -480,7 +482,7 @@ pristupiPacijentu(){
   getAllClinics = () => {
     axios({
       method: 'get',
-      url: 'http://localhost:8099/clinic/getClinics'      
+      url: url + 'clinic/getClinics'      
     }).then((response)=>{    
       this.getAllCheckupTypes();   
       this.setState({clinics: response.data, chooseTip: true, hideOperacije: true,
@@ -505,7 +507,7 @@ pristupiPacijentu(){
     const {id} = this.props.match.params; 
     axios({
       method: 'get',
-      url: 'http://localhost:8099/getPatientProfile/' + id,
+      url: url + 'getPatientProfile/' + id,
       headers: { "Authorization": AuthStr }
     }).then((response)=>{      
       this.setState({name:response.data.user.name, email:response.data.user.email,surname:response.data.user.surname,phone:response.data.phoneNumber,password:response.data.user.password,
@@ -548,7 +550,7 @@ pristupiPacijentu(){
 
           axios({
             method: 'post',
-            url: 'http://localhost:8099/editPatient', 
+            url: url + 'editPatient', 
             data: data ,
             ContentType: 'application/json'            
           }).then((response) => {
@@ -577,7 +579,7 @@ pristupiPacijentu(){
     niz.push(this.state.pretragaDatum)
     axios({
       method: 'post',
-      url: 'http://localhost:8099/clinic/getSelectedDoctor',
+      url: url + 'clinic/getSelectedDoctor',
       headers: { "Authorization": AuthStr } ,
       data: niz
     }).then((response)=>{      
@@ -594,7 +596,7 @@ pristupiPacijentu(){
     const {id} = this.props.match.params;
     axios({
       method: 'get',
-      url: 'http://localhost:8099/getMedicalRecord/' + id,
+      url: url + 'getMedicalRecord/' + id,
       headers: { "Authorization": AuthStr }
     }).then((response)=>{      
       this.setState({mrHeight: response.data.height , mrWeight: response.data.weight, 
@@ -613,7 +615,7 @@ pristupiPacijentu(){
     const {id} = this.props.match.params;   
     axios({
       method: 'post',
-      url: 'http://localhost:8099/checkup/patientHistory/' + type + '/' + id ,
+      url: url + 'checkup/patientHistory/' + type + '/' + id ,
       headers: { "Authorization": AuthStr } ,     
     }).then((response)=>{     
       if (type === 'PREGLED') {
@@ -645,7 +647,7 @@ pristupiPacijentu(){
       }
       axios({
         method: 'post',
-        url: 'http://localhost:8099/editMedicalRecord',
+        url: url + 'editMedicalRecord',
         data: data,
         ContentType: 'application/json'
     }).then((response) => {
@@ -729,7 +731,7 @@ else{
       let AuthStr = 'Bearer '.concat(token);
       axios({
         method: 'post',
-        url: 'http://localhost:8099/checkup/updateReport',
+        url: url + 'checkup/updateReport',
         data: report,
         ContentType: 'application/json',
         headers: { "Authorization": AuthStr }  
@@ -749,7 +751,7 @@ else{
     event.preventDefault();
     axios({
         method: 'get',
-        url: 'http://localhost:8099/codebook',
+        url: url + 'codebook',
       }).then((response)=>{
         console.log(response);
         this.setState({codes:response.data})
@@ -794,7 +796,7 @@ if (ok) {
     };
     axios({
         method: 'post',
-        url: 'http://localhost:8099/checkup/addReport',
+        url: url + 'checkup/addReport',
         data: data,
         ContentType: 'application/json'
     }).then((response) => {
@@ -805,7 +807,7 @@ if (ok) {
 
         axios({
             method: 'post',
-            url: 'http://localhost:8099/checkup/addRecipes/'+response.data.id,
+            url: url + 'checkup/addRecipes/'+response.data.id,
             data: this.state.codebooks,
             ContentType: 'application/json'
         }).then((response) => {
@@ -901,7 +903,7 @@ else
 
       axios({
           method: 'post',
-          url: 'http://localhost:8099/bookForPatient',
+          url: url + 'bookForPatient',
           headers: { "Authorization": AuthStr } ,
           data: params,
           ContentType: 'application/json',
@@ -1001,7 +1003,7 @@ loadCheckup = () => {
   let AuthStr = 'Bearer '.concat(token);
   axios({
     method: 'get',
-    url: 'http://localhost:8099/checkup/getCheckup/' + id,
+    url: url + 'checkup/getCheckup/' + id,
     headers: { "Authorization": AuthStr } ,
   }).then((response)=>{      
     this.setState({checkup: response.data, checkupExist:true}) ;
@@ -1015,7 +1017,7 @@ checkupInfo = id => {
   let AuthStr = 'Bearer '.concat(localStorage.getItem("ulogovan"));    
   axios({
     method: 'post',
-    url: 'http://localhost:8099/checkup/infoReport/' + id ,
+    url: url + 'checkup/infoReport/' + id ,
     headers: { "Authorization": AuthStr } ,     
   }).then((response)=>{ 
     if (response.status === 200)

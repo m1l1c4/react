@@ -85,7 +85,7 @@ function ExamplesNavbar(props){
         <div className="navbar-translate">
           <NavbarBrand
             data-placement="center"
-            to="/register-page"
+            to="/login"
             target="_blank"            
             tag={Link}
           >

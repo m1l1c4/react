@@ -28,7 +28,7 @@ import "../../../node_modules/react-notifications/lib/Notifications.js"
 // core components
 import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
 //const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
 
 class ConfirmCheckup extends Component {
   constructor(props)

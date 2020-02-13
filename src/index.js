@@ -57,7 +57,7 @@ ReactDOM.render(
         render={props => <LandingPage {...props} />}
       />
       <Route
-        path="/register-page"
+        path="/login"
         render={props => <RegisterPage {...props} />}
       />
       <Route
@@ -112,7 +112,7 @@ ReactDOM.render(
         path="/map"
         render={props => <MapGoogle {...props} />}
       />
-      <Redirect to="/register-page" />
+      <Redirect to="/login" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

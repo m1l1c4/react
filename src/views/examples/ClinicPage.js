@@ -37,8 +37,7 @@ import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import "../../../node_modules/react-notifications/lib/notifications.css"
 import "../../../node_modules/react-notifications/lib/Notifications.js"
-//const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
 
 class ClinicPage extends Component {
     constructor(props)
@@ -285,11 +284,11 @@ class ClinicPage extends Component {
   logoutUser = () => {  
     localStorage.removeItem('ulogovan')
     localStorage.removeItem('role')
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
  
   redirect = () => {
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
  
   showCodebook = () =>{

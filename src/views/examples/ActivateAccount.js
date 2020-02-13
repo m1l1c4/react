@@ -28,8 +28,8 @@ import "../../../node_modules/react-notifications/lib/Notifications.js"
 // core components
 import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
 
-//const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
+//const url = 'http://localhost:8099/'
 
 class ActivateAccount extends Component {
   constructor(props)
@@ -49,9 +49,9 @@ class ActivateAccount extends Component {
       
   doc = document.documentElement.classList.remove("nav-open");
   /*eff = useEffect(() => {
-    document.body.classList.add("register-page");
+    document.body.classList.add("login");
     return function cleanup() {
-      document.body.classList.remove("register-page");
+      document.body.classList.remove("login");
     };
   });*/
   componentDidMount()
@@ -70,7 +70,7 @@ class ActivateAccount extends Component {
       }).then((response) => {
         if (response.data === null)
         {
-          this.props.history.push('/register-page');
+          this.props.history.push('/login');
         }
         else{
           //ulogovani = response.data.type;
@@ -81,7 +81,7 @@ class ActivateAccount extends Component {
   }
   
   redirect = () => {
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
   activate = () => {

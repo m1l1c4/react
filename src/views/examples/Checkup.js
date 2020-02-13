@@ -39,8 +39,8 @@ import ExamplesNavbar from 'components/Navbars/ExamplesNavbar.js';
 import ProfilePageHeader from 'components/Headers/ProfilePageHeader.js';
 import DemoFooter from 'components/Footers/DemoFooter.js';
 
-//const url = 'https://clinical-center-tim31.herokuapp.com/'
-const url = 'http://localhost:8099/'
+const url = 'https://clinical-center-tim31.herokuapp.com/'
+//const url = 'http://localhost:8099/'
 
 class Checkup extends Component {
     constructor(props) {
@@ -265,7 +265,7 @@ class Checkup extends Component {
    logoutUser = () => {  
      localStorage.removeItem('ulogovan')
      localStorage.removeItem('role')
-     this.props.history.push('/register-page');
+     this.props.history.push('/login');
    }
 
   sendEmailToDoctor = () => {
@@ -325,7 +325,7 @@ class Checkup extends Component {
   };
 
   redirect = () => {
-    this.props.history.push('/register-page');
+    this.props.history.push('/login');
   }
 
   cancelSearchRoom = () => {
