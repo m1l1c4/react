@@ -155,7 +155,7 @@ class RegisterPage extends Component {
 
           axios({
             method: 'post',
-            url: url + 'register',
+            url: url + 'log/register',
             data: data ,
             ContentType: 'application/json'            
           }).then((response) => {
@@ -180,7 +180,7 @@ class RegisterPage extends Component {
 
     axios({
       method: 'get' ,    
-      url: url + 'getUser' ,           
+      url: url + 'log/getUser' ,           
       headers: { "Authorization": AuthStr }   
     }).then((response) => {
       if (response.data != null)
@@ -248,7 +248,7 @@ class RegisterPage extends Component {
       let AuthStr = 'Bearer '.concat(token);
       axios({
         method: 'post',
-        url: url + 'changePassword',
+        url: url + 'log/changePassword',
         data: text,
         headers: { "Authorization": AuthStr },
       }).then((response) => {
@@ -302,7 +302,7 @@ class RegisterPage extends Component {
     let AuthStr = 'Bearer '.concat(localStorage.getItem('ulogovan'))
       axios({
         method: 'get',
-        url: url + 'rollingInTheDeep' ,
+        url: url + 'log/rollingInTheDeep' ,
         headers: { "Authorization": AuthStr }             
       }).then((response)=>{  
         if (response.status !== 404) {
@@ -330,7 +330,7 @@ class RegisterPage extends Component {
       };
       axios({
         method: 'post',
-        url: url + 'login',
+        url: url + 'log/login',
         data: data,
         ContentType: 'application/json'
       }).then((response) => {
