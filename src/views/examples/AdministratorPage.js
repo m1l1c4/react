@@ -937,7 +937,7 @@ cijenaTipaValidacija(e) {
     let AuthStr = 'Bearer '.concat(token);
     axios({
       method: 'get' ,    
-      url: url + 'log/getUser' ,           
+      url: 'http://localhost:8099/getUser' ,           
       headers: { "Authorization": AuthStr }   
       }).then((response) => {
         if(response.data.type !== 'ADMINISTRATOR' && response.data.type !== 'CCADMIN'){
@@ -951,7 +951,7 @@ cijenaTipaValidacija(e) {
               this.setState({datum:ddatum, date:ddatum, datumRez:ddatum})
               axios({
                 method: 'get' ,    
-                url: url + 'log/getUser' ,          
+                url: url + 'getUser' ,          
                 headers: { "Authorization": AuthStr }  
                 }).then((response) => {
                   if (response.data != null)
