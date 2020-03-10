@@ -940,6 +940,9 @@ cijenaTipaValidacija(e) {
       url: 'http://localhost:8099/getUser' ,           
       headers: { "Authorization": AuthStr }   
       }).then((response) => {
+        if(response.data.type !== 'ADMINISTRATOR' && response.data.type !== 'CCADMIN'){
+          this.props.history.push('/login');
+        }
         if (response.data.type === 'ADMINISTRATOR' || response.data.type === 'CCADMIN'){
 
               this.setState({showProfile:false});
@@ -1032,7 +1035,7 @@ cijenaTipaValidacija(e) {
               });
     }
   else{
-    this.props.history.push('/login');
+    //this.props.history.push('/login');
   }
 }, (error) => {
   this.props.history.push('/login');
@@ -1279,8 +1282,8 @@ cijenaTipaValidacija(e) {
   workerStartHrValidation(e) {
     this.setState({ workerStartHr: e.target.value })
     let startHr = e.target.value
-    if (startHr < 0 || startHr > 24)
-      this.setState({ workerStartHrVal: "Radno vrijeme mora biti izmedju 00 i 24" })
+    if (startHr < 7 || startHr > 19)
+      this.setState({ workerStartHrVal: "Radno vrijeme mora biti izmedju 7 i 20" })
     else
       this.setState({ workerStartHrVal: "" })
   }
@@ -1288,8 +1291,8 @@ cijenaTipaValidacija(e) {
   workerEndHrValidation(e) {
     this.setState({ workerEndHr: e.target.value })
     let endHr = e.target.value
-    if (endHr < 0 || endHr > 24)
-      this.setState({ workerEndHrVal: "Radno vrijeme mora biti izmedju 00 i 24" })
+    if (endHr < 8 || endHr > 20)
+      this.setState({ workerEndHrVal: "Radno vrijeme mora biti izmedju 7 i 20" })
     else
       this.setState({ workerEndHrVal: "" })
   }
@@ -1692,7 +1695,7 @@ let AuthStr = 'Bearer '.concat(localStorage.getItem("ulogovan"));
         "phone": this.state.workerPhone,
         "startHr": this.state.workerStartHr,
         "endHr": this.state.workerEndHr,
-        "type" : this.state.doctorType.name,
+        "type" : this.state.doctorType,
         "clinic" : this.state.clicniCitava,
         }
  
@@ -1823,7 +1826,7 @@ let AuthStr = 'Bearer '.concat(localStorage.getItem("ulogovan"));
         console.log(response);
         this.setState({types: response.data});
         if(response.data.length > 0){
-          this.setState({doctorType:response.data[0]});
+          this.setState({doctorType:response.data[0].name});
           axios({
             method: 'get',
             url: url + 'clinic/getClinicsByType/' + response.data[0].name,
