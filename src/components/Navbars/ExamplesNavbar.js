@@ -40,7 +40,7 @@ function ExamplesNavbar(props){
     let AuthStr = 'Bearer '.concat(token);
     axios({
       method: 'get' ,    
-      url: 'http://localhost:8099/getUser' ,           
+      url: 'https://clinical-center-tim31.herokuapp.com/log/getUser',           
       headers: { "Authorization": AuthStr }   
       }).then((response) => {
         if (response.data != null)
